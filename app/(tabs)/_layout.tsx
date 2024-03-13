@@ -1,55 +1,68 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable, useColorScheme } from 'react-native';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import { BottomBarPaper } from '../../layouts/BottomBarPaper'
+import AppBar from '../../components/Interface/AppBar'
 
-import Colors from '../../constants/Colors';
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+export const unstable_settings = {
+  initialRouteName: 'index',
 }
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+export default function Layout() {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-      }}>
-      <Tabs.Screen
-        name="index"
+    <>
+      <BottomBarPaper
+        safeAreaInsets={{ bottom: 0 }}
+        screenOptions={
+          {
+            // API Reference: https://reactnavigation.org/docs/material-bottom-tab-navigator#options
+          }
+        }
+      >
+      <BottomBarPaper.Screen
+        name='index'
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+          tabBarLabel: 'Home',
+          tabBarIcon(props) {
+            return (
+              <MaterialCommunityIcons
+                color={props.color}
+                size={24}
+                name={props.focused ? 'home' : 'home-outline'}
+              />
+            )
+          },
         }}
       />
-      <Tabs.Screen
-        name="two"
+      <BottomBarPaper.Screen
+        name='latest'
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarLabel: 'Latest',
+          tabBarIcon(props) {
+            return (
+              <MaterialCommunityIcons
+                color={props.color}
+                size={24}
+                name={'history'}
+              />
+            )
+          },
         }}
       />
-    </Tabs>
-  );
+        <BottomBarPaper.Screen
+          name='two'
+          options={{
+            tabBarLabel: 'Manga',
+            tabBarIcon(props) {
+              return (
+                <MaterialCommunityIcons
+                  color={props.color}
+                  size={24}
+                  name={props.focused ? 'book' : 'book-outline'}
+                />
+              )
+            },
+          }}
+        />
+      </BottomBarPaper>
+    </>
+  )
 }

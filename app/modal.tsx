@@ -1,15 +1,16 @@
-import { StatusBar } from 'expo-status-bar'
-
-import { Text, View } from '../components/Themed'
-
-export default function ModalScreen() {
+import { View } from 'react-native';
+import { Link, router } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+export default function Modal() {
+  // If the page was reloaded or navigated to directly, then the modal should be presented as
+  // a full screen page. You may need to change the UI to account for this.
+  // const isPresented = .canGoBack();
   return (
-    <View>
-      <Text>Modal</Text>
-      <View lightColor='#eee' darkColor='rgba(255,255,255,0.1)' />
-
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar />
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      {/* Use `../` as a simple way to navigate to the root. This is not analogous to "goBack". */}
+      {!0 && <Link href="../">Dismiss</Link>}
+      {/* Native modals have dark backgrounds on iOS, set the status bar to light content. */}
+      <StatusBar style="light" />
     </View>
-  )
+  );
 }
